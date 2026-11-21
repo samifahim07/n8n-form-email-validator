@@ -1,0 +1,140 @@
+{
+  "name": "Form Email Checker",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1yPXUoB98j8aDcHIcVVf4eFe9dOqWpNNQ1Q1FSS7K8Wg",
+          "mode": "list",
+          "cachedResultName": " CAREERVEX AI                                                     (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yPXUoB98j8aDcHIcVVf4eFe9dOqWpNNQ1Q1FSS7K8Wg/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1473294659,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1yPXUoB98j8aDcHIcVVf4eFe9dOqWpNNQ1Q1FSS7K8Wg/edit#gid=1473294659"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "df7016f0-7ffa-422c-9553-c246abc32513",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "aah4Z0PulJA4YUz7",
+          "name": "Google Sheets Trigger account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "fd475fd9-3d2a-4e34-bf75-c38d9b18780b",
+              "leftValue": "={{ $json['Email Address '] }}",
+              "rightValue": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "d8f8277e-9341-4495-928c-5cae84e2ac5e",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Email Address '] }}",
+        "subject": "Thanks for filling the form",
+        "message": "=Hi {{ $json['Name '] }}, thanks for submitting the form. We received your response.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -48
+      ],
+      "id": "e56908de-a6f5-4a96-bf5e-70af37f6645d",
+      "name": "Send a message",
+      "webhookId": "cb04048c-7036-4b71-823e-3aa9017b2734",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "MwDTcIm1QSTo95Mp",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "84d9ac58-6e21-487d-92f4-2501d114e2bb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9e41730eec54b229fa8d528bbfe379e8a94a14270eae770b5bdf54ec48656d02"
+  },
+  "nodeGroups": [],
+  "id": "BHxc3QzwBovnnfeX",
+  "tags": []
+}
